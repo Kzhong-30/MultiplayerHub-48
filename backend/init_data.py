@@ -331,6 +331,58 @@ try:
         disease = models.DiseaseGuide(**disease_data)
         db.add(disease)
 
+    services_data = [
+        {
+            "name": "爱心宠物医院",
+            "category": "hospital",
+            "address": "北京市朝阳区建国路88号",
+            "phone": "010-88881234",
+            "latitude": 39.9142,
+            "longitude": 116.4274,
+            "rating": 4.8,
+            "review_count": 156,
+            "price_range": "80-500元",
+            "tags": ["24小时急诊", "疫苗接种", "绝育手术"],
+            "business_hours": {"周一至周五": "08:00-20:00", "周六日": "09:00-18:00"},
+            "description": "专业宠物医院，拥有先进设备和经验丰富的兽医团队",
+            "image_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400"
+        },
+        {
+            "name": "萌宠美容工作室",
+            "category": "grooming",
+            "address": "北京市朝阳区三里屯太古里",
+            "phone": "010-66665678",
+            "latitude": 39.9342,
+            "longitude": 116.4574,
+            "rating": 4.6,
+            "review_count": 98,
+            "price_range": "100-380元",
+            "tags": ["洗澡美容", "SPA护理", "造型设计"],
+            "business_hours": {"周一至周日": "10:00-21:00"},
+            "description": "专业宠物美容，让您的爱宠焕然一新",
+            "image_url": "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=400"
+        },
+        {
+            "name": "毛孩子宠物用品超市",
+            "category": "store",
+            "address": "北京市西城区西单北大街5号",
+            "phone": "010-55559012",
+            "latitude": 39.9242,
+            "longitude": 116.3774,
+            "rating": 4.5,
+            "review_count": 210,
+            "price_range": "20-800元",
+            "tags": ["进口粮", "玩具用品", "免费送货"],
+            "business_hours": {"周一至周日": "09:00-22:00"},
+            "description": "一站式宠物用品购物，正品保证",
+            "image_url": "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400"
+        }
+    ]
+
+    for service_data in services_data:
+        service = models.Service(**service_data)
+        db.add(service)
+
     meetups_data = [
         {
             "organizer_id": 1,

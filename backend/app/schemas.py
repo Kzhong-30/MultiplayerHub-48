@@ -308,6 +308,8 @@ class ServiceBase(BaseModel):
     longitude: float
     rating: float = 0
     review_count: int = 0
+    price_range: Optional[str] = None
+    tags: List[str] = []
     business_hours: Dict[str, Any] = {}
     description: Optional[str] = None
     image_url: Optional[str] = None

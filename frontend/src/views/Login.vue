@@ -3,7 +3,7 @@
     <div class="login-bg"></div>
     <div class="login-card card-shadow">
       <div class="login-header text-center">
-        <el-icon :size="48" color="#409EFF"><PawPrint /></el-icon>
+        <el-icon :size="48" color="#409EFF"><Guide /></el-icon>
         <h1 class="title">宠物社交平台</h1>
         <p class="subtitle">连接爱宠人士，分享养宠乐趣</p>
       </div>

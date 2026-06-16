@@ -211,6 +211,8 @@ class Service(Base):
     longitude = Column(Float, nullable=False)
     rating = Column(Float, default=0)
     review_count = Column(Integer, default=0)
+    price_range = Column(String, nullable=True)
+    tags = Column(JSON, default=list)
     business_hours = Column(JSON, default=dict)
     description = Column(Text, nullable=True)
     image_url = Column(String, nullable=True)

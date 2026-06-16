@@ -90,7 +90,7 @@
 
           <div class="service-hours mt-15" v-if="service.business_hours">
             <el-icon color="#E6A23C"><Clock /></el-icon>
-            <span>营业时间：{{ service.business_hours }}</span>
+            <span>营业时间：{{ formatBusinessHours(service.business_hours) }}</span>
           </div>
 
           <div class="service-price mt-15" v-if="service.price_range">
@@ -137,7 +137,7 @@
         <el-descriptions :column="2" border class="mt-20">
           <el-descriptions-item label="地址">{{ selectedService.address || '暂无' }}</el-descriptions-item>
           <el-descriptions-item label="电话">{{ selectedService.phone || '暂无' }}</el-descriptions-item>
-          <el-descriptions-item label="营业时间">{{ selectedService.business_hours || '暂无' }}</el-descriptions-item>
+          <el-descriptions-item label="营业时间">{{ formatBusinessHours(selectedService.business_hours) || '暂无' }}</el-descriptions-item>
           <el-descriptions-item label="价格范围">{{ selectedService.price_range || '暂无' }}</el-descriptions-item>
           <el-descriptions-item label="距离" v-if="selectedService.distance !== undefined">
             {{ selectedService.distance }} km
@@ -220,6 +220,14 @@ const filteredServices = computed(() => {
 
   return result
 })
+
+function formatBusinessHours(hours) {
+  if (typeof hours === 'string') return hours
+  if (typeof hours === 'object' && hours !== null) {
+    return Object.entries(hours).map(([k, v]) => `${k}: ${v}`).join('，')
+  }
+  return ''
+}
 
 function getCategoryType(category) {
   const types = {

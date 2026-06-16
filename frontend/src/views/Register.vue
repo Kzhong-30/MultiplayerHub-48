@@ -3,7 +3,7 @@
     <div class="login-bg"></div>
     <div class="register-card card-shadow">
       <div class="login-header text-center">
-        <el-icon :size="48" color="#409EFF"><PawPrint /></el-icon>
+        <el-icon :size="48" color="#409EFF"><Guide /></el-icon>
         <h1 class="title">用户注册</h1>
         <p class="subtitle">加入宠物社交平台，开启养宠新体验</p>
       </div>
@@ -101,10 +101,45 @@ async function handleRegister() {
 </script>
 
 <style scoped lang="scss">
-@import './Login.vue';
-
 .register-container {
-  @extend .login-container;
+  position: relative;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.login-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  z-index: -1;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    width: 400px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+  }
 }
 
 .register-card {
@@ -113,6 +148,23 @@ async function handleRegister() {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   border-radius: 16px;
+}
+
+.login-header {
+  margin-bottom: 30px;
+
+  .title {
+    margin: 15px 0 8px;
+    font-size: 28px;
+    background: linear-gradient(90deg, #409EFF, #67C23A);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .subtitle {
+    color: #909399;
+    font-size: 14px;
+  }
 }
 
 .link {

@@ -15,7 +15,7 @@
           </el-tag>
         </div>
         <div class="disease-meta mt-10" v-if="disease.species">
-          <el-icon color="#909399"><PawPrint /></el-icon>
+          <el-icon color="#909399"><Guide /></el-icon>
           <span class="meta-text">适用宠物：{{ disease.species }}</span>
         </div>
       </div>
@@ -59,17 +59,22 @@
 
         <el-card class="card-shadow mb-20">
           <template #header>
-            <span class="section-title"><el-icon><ShieldCheck /></el-icon> 预防措施</span>
+            <span class="section-title"><el-icon><CircleCheck /></el-icon> 预防措施</span>
           </template>
           <p class="section-content">{{ disease.prevention || '暂无信息' }}</p>
         </el-card>
 
-        <el-card class="card-shadow" v-if="disease.tips">
+        <el-card class="card-shadow" v-if="disease.severity === 'high' || disease.severity === 'moderate'">
           <template #header>
             <span class="section-title"><el-icon><InfoFilled /></el-icon> 温馨提示</span>
           </template>
           <div class="tips-content">
-            <el-alert :title="disease.tips" type="warning" :closable="false" show-icon />
+            <el-alert
+              :title="disease.severity === 'high' ? '此疾病较为严重，发现相关症状请尽快就医，切勿自行用药' : '此疾病需注意观察，如有疑似症状建议及时咨询兽医'"
+              type="warning"
+              :closable="false"
+              show-icon
+            />
           </div>
         </el-card>
       </el-col>

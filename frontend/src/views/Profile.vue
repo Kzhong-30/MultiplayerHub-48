@@ -130,11 +130,9 @@
                 </el-button>
               </div>
               <div class="post-content mt-10">{{ post.content }}</div>
-              <div class="post-images mt-10" v-if="post.images?.length > 0">
+              <div class="post-media mt-10" v-if="post.media_url">
                 <img
-                  v-for="(img, index) in post.images"
-                  :key="index"
-                  :src="img"
+                  :src="post.media_url"
                   class="post-image"
                 />
               </div>
@@ -152,11 +150,11 @@
               <div class="post-stats mt-10">
                 <span class="stat">
                   <el-icon color="#F56C6C"><Star /></el-icon>
-                  {{ post.like_count || 0 }}
+                  {{ post.likes_count || 0 }}
                 </span>
                 <span class="stat">
                   <el-icon color="#909399"><ChatDotRound /></el-icon>
-                  {{ post.comment_count || 0 }}
+                  {{ post.comments_count || 0 }}
                 </span>
               </div>
             </div>

@@ -184,10 +184,10 @@ const services = ref([])
 const categories = ref([
   { value: '', label: '全部', icon: markRaw('Grid') },
   { value: 'hospital', label: '宠物医院', icon: markRaw('Plus') },
-  { value: 'grooming', label: '美容店', icon: markRaw('MagicStick') },
+  { value: 'grooming', label: '美容店', icon: markRaw('Brush') },
   { value: 'boarding', label: '寄养中心', icon: markRaw('HomeFilled') },
   { value: 'training', label: '训练学校', icon: markRaw('Medal') },
-  { value: 'shop', label: '用品商店', icon: markRaw('Goods') }
+  { value: 'shop', label: '用品商店', icon: markRaw('ShoppingCart') }
 ])
 const showDetailDialog = ref(false)
 const selectedService = ref(null)

@@ -101,7 +101,7 @@
               <div class="meetup-info">
                 <div class="info-item">
                   <el-icon><Calendar /></el-icon>
-                  <span>{{ formatDate(meetup.meetup_time) }}</span>
+                  <span>{{ formatDate(meetup.meetup_date) }}</span>
                 </div>
                 <div class="info-item">
                   <el-icon><Location /></el-icon>
@@ -113,7 +113,7 @@
                 </div>
                 <div class="info-item">
                   <el-icon><User /></el-icon>
-                  <span>发起人：{{ meetup.creator?.username }}</span>
+                  <span>发起人：{{ meetup.organizer?.username }}</span>
                 </div>
                 <div class="info-item">
                   <el-icon><UserFilled /></el-icon>
@@ -146,7 +146,7 @@
                 <el-button size="small" @click="viewMeetupDetail(meetup)">
                   查看详情
                 </el-button>
-                <template v-if="meetup.creator?.id !== currentUserId && isUpcoming(meetup)">
+                <template v-if="meetup.organizer?.id !== currentUserId && isUpcoming(meetup)">
                   <el-button
                     v-if="!isJoined(meetup)"
                     type="primary"
@@ -178,9 +178,9 @@
         <el-form-item label="聚会标题" prop="title">
           <el-input v-model="meetupForm.title" placeholder="请输入聚会标题" />
         </el-form-item>
-        <el-form-item label="时间" prop="meetup_time">
+        <el-form-item label="时间" prop="meetup_date">
           <el-date-picker
-            v-model="meetupForm.meetup_time"
+            v-model="meetupForm.meetup_date"
             type="datetime"
             placeholder="选择聚会时间"
             style="width: 100%"
@@ -232,7 +232,7 @@
       <div v-if="selectedMeetup">
         <h3>{{ selectedMeetup.title }}</h3>
         <div class="meetup-meta">
-          <div class="meta-item"><el-icon><Calendar /></el-icon> {{ formatDate(selectedMeetup.meetup_time) }}</div>
+          <div class="meta-item"><el-icon><Calendar /></el-icon> {{ formatDate(selectedMeetup.meetup_date) }}</div>
           <div class="meta-item"><el-icon><Location /></el-icon> {{ selectedMeetup.location }}</div>
         </div>
         <p class="mt-20" v-if="selectedMeetup.description">{{ selectedMeetup.description }}</p>
@@ -284,7 +284,7 @@ const userLocationSet = computed(() => {
 
 const meetupForm = ref({
   title: '',
-  meetup_time: null,
+  meetup_date: null,
   location: '',
   description: ''
 })
@@ -316,17 +316,17 @@ function getMeetupStatusText(meetup) {
 }
 
 function isUpcoming(meetup) {
-  return dayjs(meetup.meetup_time).isAfter(dayjs())
+  return dayjs(meetup.meetup_date).isAfter(dayjs())
 }
 
 function isOngoing(meetup) {
   const now = dayjs()
-  const meetupTime = dayjs(meetup.meetup_time)
+  const meetupTime = dayjs(meetup.meetup_date)
   return now.isAfter(meetupTime) && now.isBefore(meetupTime.add(2, 'hour'))
 }
 
 function isEnded(meetup) {
-  return dayjs(meetup.meetup_time).add(2, 'hour').isBefore(dayjs())
+  return dayjs(meetup.meetup_date).add(2, 'hour').isBefore(dayjs())
 }
 
 function isJoined(meetup) {
@@ -413,7 +413,7 @@ function viewMeetupDetail(meetup) {
 }
 
 async function submitMeetup() {
-  if (!meetupForm.value.title || !meetupForm.value.meetup_time || !meetupForm.value.location) {
+  if (!meetupForm.value.title || !meetupForm.value.meetup_date || !meetupForm.value.location) {
     ElMessage.warning('请填写完整信息')
     return
   }
@@ -421,7 +421,7 @@ async function submitMeetup() {
     await nearbyApi.createMeetup(meetupForm.value)
     ElMessage.success('聚会发布成功')
     showMeetupDialog.value = false
-    meetupForm.value = { title: '', meetup_time: null, location: '', description: '' }
+    meetupForm.value = { title: '', meetup_date: null, location: '', description: '' }
     loadMeetups()
   } catch (e) {
     ElMessage.error(e.response?.data?.detail || '发布失败')

@@ -48,7 +48,7 @@
           <div class="post-actions flex-between">
             <div class="action-group">
               <span class="action-item cursor-pointer" :class="{ active: post.is_liked }" @click="toggleLike(post)">
-                <el-icon>{{ post.is_liked ? 'StarFilled' : 'Star' }}</el-icon>
+                <el-icon><component :is="post.is_liked ? 'StarFilled' : 'Star'" /></el-icon>
                 <span>{{ post.likes_count }}</span>
               </span>
               <span class="action-item cursor-pointer" @click="showComments(post)">

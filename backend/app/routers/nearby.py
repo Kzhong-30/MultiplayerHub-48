@@ -8,6 +8,13 @@ from ..database import get_db
 router = APIRouter(prefix="/nearby", tags=["附近宠物"])
 
 
+def calculate_age(birthday):
+    if not birthday:
+        return None
+    today = datetime.now().date()
+    return today.year - birthday.year - ((today.month, today.day) < (birthday.month, birthday.day))
+
+
 @router.get("/pets", response_model=List[dict])
 def get_nearby_pets(
     radius_km: float = Query(5.0, ge=0.1, le=50),
@@ -36,13 +43,15 @@ def get_nearby_pets(
             if species:
                 pets = [p for p in pets if p.species == species]
             
-            if pets:
+            for pet in pets:
+                pet_dict = schemas.Pet.model_validate(pet).model_dump()
+                pet_dict["age"] = calculate_age(pet.birthday)
                 results.append({
                     "user": schemas.UserWithDistance(
                         **schemas.User.model_validate(user).model_dump(),
                         distance=round(distance, 2)
                     ),
-                    "pets": pets,
+                    "pet": pet_dict,
                     "distance": round(distance, 2)
                 })
     
@@ -50,7 +59,7 @@ def get_nearby_pets(
     return results
 
 
-@router.get("/meetups", response_model=List[schemas.Meetup])
+@router.get("/meetups", response_model=List[dict])
 def get_nearby_meetups(
     radius_km: float = Query(10.0, ge=0.1, le=100),
     status: Optional[str] = "upcoming",
@@ -70,12 +79,11 @@ def get_nearby_meetups(
         )
         
         if distance <= radius_km:
-            results.append(meetup)
+            meetup_dict = schemas.Meetup.model_validate(meetup).model_dump()
+            meetup_dict["distance"] = round(distance, 2)
+            results.append(meetup_dict)
     
-    results.sort(key=lambda m: utils.calculate_distance(
-        current_user.latitude, current_user.longitude,
-        m.latitude, m.longitude
-    ))
+    results.sort(key=lambda m: m["distance"])
     
     return results
 

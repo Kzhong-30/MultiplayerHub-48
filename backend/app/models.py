@@ -235,6 +235,7 @@ class Meetup(Base):
     status = Column(String, default="upcoming")
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
+    organizer = relationship("User", foreign_keys=[organizer_id])
     participants = relationship("MeetupParticipant", back_populates="meetup", cascade="all, delete-orphan")
 
 
@@ -248,3 +249,5 @@ class MeetupParticipant(Base):
     joined_at = Column(DateTime(timezone=True), server_default=func.now())
 
     meetup = relationship("Meetup", back_populates="participants")
+    user = relationship("User", foreign_keys=[user_id])
+    pet = relationship("Pet", foreign_keys=[pet_id])
